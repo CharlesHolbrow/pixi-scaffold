@@ -1,0 +1,21 @@
+{
+  "name": "pixi-scafold",
+  "version": "1.0.0",
+  "description": "Clone this to start an empty pixi project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Charles Holbrow",
+  "license": "ISC",
+  "dependencies": {
+    "pixi.js": "^4.3.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CharlesHolbrow/pixi-scafold.git"
+  },
+  "devDependencies": {
+    "http-server": "^0.9.0"
+  }
+}

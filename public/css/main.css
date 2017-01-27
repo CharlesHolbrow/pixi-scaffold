@@ -1,0 +1,55 @@
+html, div {padding: 0; margin: 0}
+
+html {
+  /* Prevent us from being able to scroll past the end of
+  the page */
+  overflow: hidden;
+}
+
+div.pane {
+  /*
+  position: absolute is relative to the nearest non-static ancestor.
+  position: fixed is relative to theviewport. 
+
+  The default position is 'static' so we have to make the
+  parent be non-static for inner divs to work as desired
+  */
+  position: absolute; 
+  box-sizing: border-box;
+}
+
+#full {
+  border: 3px solid blue;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#main-view {
+  width: 80%;
+  height: 100%;
+  border: 3px solid green;
+  /* If we leave the parent position in the default 'static'
+  setting this to absolute will not work */
+}
+
+#side {
+  width: 20%;
+  height: 100%;
+  border: 3px solid pink;
+  right: 0;
+}
+
+#main-view canvas {
+  width: 100%;
+  height: 100%;
+  /* I'm not sure if pixi will do this for us or not, but we
+  want to prevent the user from selecting the canvas */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
