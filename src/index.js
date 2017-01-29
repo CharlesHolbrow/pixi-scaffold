@@ -20,9 +20,9 @@ function setup() {
 
   // oryx: 16x24
   // mine: 28x35 (tile), 30x37 (cell)
-  var texture = loader.resources["/img/elements9x3.png"].texture;
+  texture = loader.resources["/img/elements9x3.png"].texture;
+  terrain = Sprite.fromImage("/img/elements9x3.png");
   texture.frame = new Rectangle(30, 37, 30, 37);
-  var terrain = new PIXI.extras.TilingSprite(texture);
 
   stage.addChild(terrain);
   renderer.render(stage);
