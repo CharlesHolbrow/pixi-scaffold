@@ -5,10 +5,10 @@ HTTP_SERVER := node_modules/.bin/http-server
 
 # The % syntax used here is known as a "Substitution Reference"
 INPUT_JS  := $(wildcard src/*.js)
-COMMON_JS := $(INPUT_JS:src/%.js=tmp/%.js)
+COMMON_JS := $(INPUT_JS:src/%.js=common/%.js)
 
 JS_ENTRY := src/index.js
-JS_ENTRY := $(JS_ENTRY:src/%.js=tmp/%.js)
+JS_ENTRY := $(JS_ENTRY:src/%.js=common/%.js)
 
 dev: public/js/pixi.min.js public/js/pixi.min.js.map public/js/bundle.js
 
@@ -22,7 +22,7 @@ public/js/bundle.js: $(COMMON_JS)
 .SECONDARY: $(COMMON_JS)
 .DELETE_ON_ERROR: public/js/bundle.js
 
-tmp/%.js: src/%.js .babelrc
+common/%.js: src/%.js .babelrc
 	mkdir -p $(@D)
 	node_modules/.bin/babel $< -o $@ --source-maps inline
 
@@ -38,7 +38,9 @@ node_modules: package.json
 	touch node_modules
 
 clean:
-	rm public/js/bundle.js
+	rm -f public/js/bundle.js
+	rm -f $(COMMON_JS)
+
 
 debug:
 	@echo $(JS_ENTRY)
