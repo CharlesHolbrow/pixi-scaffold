@@ -19,7 +19,7 @@ serve: public node_modules
 public/js/bundle.js: $(COMMON_JS)
 	node_modules/.bin/browserify -d $(JS_ENTRY) > $@
 
-.INTERMEDIATE: $(COMMON_JS)
+.SECONDARY: $(COMMON_JS)
 .DELETE_ON_ERROR: public/js/bundle.js
 
 tmp/%.js: src/%.js .babelrc
