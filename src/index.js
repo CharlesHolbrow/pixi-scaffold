@@ -28,11 +28,12 @@ function updateRendererSize(){
 function setup() {
   // oryx: 16x24
   // mine: 28x35 (tile), 30x37 (cell)
-  const texture = PIXI.loader.resources["/img/elements9x3.png"].texture;
-  const terrain = PIXI.Sprite.fromImage("/img/elements9x3.png");
-  texture.frame = new PIXI.Rectangle(30, 37, 30, 37);
-
-  stage.addChild(terrain);
+  for (let i = 0; i < t.length; i++) {
+    const s = new PIXI.Sprite(t.textures[i])
+    s.y = Math.floor(i / 9)  * t.tileHeight;
+    s.x = (i % 9) * t.tileWidth;
+    stage.addChild(s);
+  }
   renderer.render(stage);
 }
 
