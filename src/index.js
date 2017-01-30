@@ -17,11 +17,10 @@ function updateRendererSize(){
 }
 
 function setup() {
-
   // oryx: 16x24
   // mine: 28x35 (tile), 30x37 (cell)
-  texture = loader.resources["/img/elements9x3.png"].texture;
-  terrain = Sprite.fromImage("/img/elements9x3.png");
+  const texture = loader.resources["/img/elements9x3.png"].texture;
+  const terrain = Sprite.fromImage("/img/elements9x3.png");
   texture.frame = new Rectangle(30, 37, 30, 37);
 
   stage.addChild(terrain);
