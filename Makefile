@@ -27,14 +27,15 @@ tmp/%.js: src/%.js .babelrc
 	node_modules/.bin/babel $< -o $@ --source-maps inline
 
 # Copy pixi linto the public/js directory
-public/js/pixi.min.js: $(PIXI_JS_DIR)
+public/js/pixi.min.js: node_modules
 	cp $(PIXI_MIN_JS) public/js
 
 public/js/pixi.min.js.map: $(PIXI_JS_DIR)
 	cp $(PIXI_MIN_MAP) public/js
 
-node_modules $(PIXI_JS_DIR): package.json
+node_modules: package.json
 	npm install
+	touch node_modules
 
 clean:
 	rm public/js/bundle.js

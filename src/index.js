@@ -1,12 +1,21 @@
-//Aliases
-var Container = PIXI.Container,
-    loader    = PIXI.loader,
-    resources = PIXI.loader.resources,
-    Sprite    = PIXI.Sprite,
-    Rectangle = PIXI.Rectangle;
+// Ensure polyfills are loaded before any of our code
+import 'babel-polyfill';
 
-var renderer
-  , stage;
+import Tileset from './Tileset.js';
+
+window.t = new Tileset({
+  imgUrl: '/img/elements9x3.png',
+  tileWidth: 28,
+  tileHeight: 35,
+  cellWidth: 30,
+  cellHeight: 37,
+  width: 9,
+  height: 3,
+});
+
+
+window.renderer = null;
+window.stage = null;
 
 
 function updateRendererSize(){
@@ -19,9 +28,9 @@ function updateRendererSize(){
 function setup() {
   // oryx: 16x24
   // mine: 28x35 (tile), 30x37 (cell)
-  const texture = loader.resources["/img/elements9x3.png"].texture;
-  const terrain = Sprite.fromImage("/img/elements9x3.png");
-  texture.frame = new Rectangle(30, 37, 30, 37);
+  const texture = PIXI.loader.resources["/img/elements9x3.png"].texture;
+  const terrain = PIXI.Sprite.fromImage("/img/elements9x3.png");
+  texture.frame = new PIXI.Rectangle(30, 37, 30, 37);
 
   stage.addChild(terrain);
   renderer.render(stage);
@@ -29,7 +38,6 @@ function setup() {
 
 
 window.onload = function() {
-
   // Create the renderer.
   renderer = PIXI.autoDetectRenderer(512, 512);
   renderer.roundPixels = true;
@@ -43,7 +51,7 @@ window.onload = function() {
 
   stage = new PIXI.Container();
 
-  loader
+  PIXI.loader
     .add("/img/elements9x3.png")
     .load(setup)
 };
