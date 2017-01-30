@@ -23,6 +23,9 @@ function updateRendererSize(){
   var height = renderer.view.scrollHeight;
   if (!renderer) return;
   renderer.resize(width, height);
+  if (!stage) return;
+  stage.x = Math.floor(width / 2);
+  stage.y = Math.floor(height / 2);
 }
 
 function setup() {
@@ -48,9 +51,8 @@ window.onload = function() {
   // settings. After the canvas has been given the correct size
   // we update the RendererSize
   document.getElementById("main-view").appendChild(renderer.view);
-  updateRendererSize()
-
   stage = new PIXI.Container();
+  updateRendererSize()
 
   PIXI.loader
     .add("/img/elements9x3.png")
