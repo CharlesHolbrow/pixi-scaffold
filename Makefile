@@ -27,14 +27,12 @@ public/js/bundle.js: $(COMMON_JS)
 
 tests: $(BABELED_JS_TESTS)
 
-# Every test depends on a commonjs file (compiled by babel)
-# with this naming convention:
-#
-# commonjs/Example.test.js && commonjs/Example.js
+# Any test depends on all our commonjs files being up-t-date. At
+# this stage we do not know which js modules our tests import.
 #
 # We browserify the .test.js file, which is responsible for
-# importing symbols from the .js file
-floss/%.test.js: commonjs/%.test.js commonjs/%.js
+# importing symbols from the commonjs files
+floss/%.test.js: commonjs/%.test.js $(COMMON_JS)
 	mkdir -p $(@D)
 	node_modules/.bin/browserify -d $< > $@
 
@@ -63,6 +61,6 @@ clean:
 	rm -f $(BABELED_JS_TESTS)
 
 debug:
-	@echo $(JS_ENTRY)
+	@echo $(BABELED_JS_TESTS)
 
 .PHONY: dev serve debug clean tests
