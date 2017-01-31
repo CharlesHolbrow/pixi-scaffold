@@ -42,6 +42,14 @@ export default class Size2D extends EventEmitter {
   }
 
   /**
+  * Get width * hight
+  * @returns {Number} length
+  */
+  get length() {
+    return this._height * this._width;
+  }
+
+  /**
   * Get size height
   * @returns {Number} height
   */
