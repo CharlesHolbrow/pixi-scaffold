@@ -100,4 +100,3 @@ export default class Tileset {
     return (this.cellHeight * tileY) + Math.floor((this.cellHeight - this.tileHeight) / 2);
   }
 }
-

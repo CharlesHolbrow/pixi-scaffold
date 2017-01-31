@@ -1,7 +1,7 @@
 import EventEmitter from 'eventemitter3';
 
 /**
-* Size2D stores a two dimensional size, and emites events when the size
+* Size2D stores a two dimensional size, and emits events when the size
 * changes.
 *
 * @extends EventEmitter
@@ -11,14 +11,18 @@ export default class Size2D extends EventEmitter {
   /**
   * Create and initialize a Size2D instance
   *
-  * @arg {number} width - Initial width
-  * @arg {number} height - Initial height
+  * @arg {object} size - parameters object
+  * @arg {number} size.width - Initial width
+  * @arg {number} size.height - Initial height
   */
-  constructor(width, height) {
+  constructor(size) {
     super();
 
-    this._width = width;
-    this._height = height;
+    if (typeof size.width !== 'number' || typeof size.height !== 'number')
+      throw new Error('Size2D must be constructed with size.width and size.height');
+
+    this._width = size.width;
+    this._height = size.height;
   }
 
   get width() {
