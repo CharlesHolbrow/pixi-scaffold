@@ -2,3 +2,4 @@ node_modules/
 public/js/lib/
 .DS_Store
 commonjs/
+floss/

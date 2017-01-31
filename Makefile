@@ -5,6 +5,9 @@ PIXI_MIN_MAP := $(PIXI_MIN_JS).map
 INPUT_JS  := $(wildcard src/*.js)
 COMMON_JS := $(INPUT_JS:src/%.js=commonjs/%.js)
 
+INPUT_JS_TESTS := $(wildcard test/*.js)
+COMMON_JS_TESTS := $(INPUT_JS_TESTS:test/%.js=commonjs/%.js)
+
 JS_ENTRY := src/index.js
 JS_ENTRY := $(JS_ENTRY:src/%.js=commonjs/%.js)
 
@@ -17,8 +20,16 @@ serve: public/ node_modules
 public/js/bundle.js: $(COMMON_JS)
 	node_modules/.bin/browserify -d $(JS_ENTRY) > $@
 
-.SECONDARY: $(COMMON_JS)
+.SECONDARY: $(COMMON_JS) $(COMMON_JS_TESTS)
 .DELETE_ON_ERROR: public/js/bundle.js
+
+tests: commonjs/Size2D.test.js commonjs/Size2D.js
+	mkdir -p floss
+	node_modules/.bin/browserify -d $< > floss/Size2D.test.js
+
+commonjs/%.test.js: test/%.test.js src/%.js .babelrc
+	mkdir -p $(@D)
+	node_modules/.bin/babel $< -o $@ --source-maps inline
 
 commonjs/%.js: src/%.js .babelrc
 	mkdir -p $(@D)
@@ -37,7 +48,7 @@ node_modules: package.json
 
 clean:
 	rm -f public/js/bundle.js
-	rm -f $(COMMON_JS)
+	rm -f $(COMMON_JS) $(COMMON_JS_TESTS)
 
 debug:
 	@echo $(JS_ENTRY)
