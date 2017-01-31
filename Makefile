@@ -8,6 +8,8 @@ COMMON_JS := $(INPUT_JS:src/%.js=commonjs/%.js)
 INPUT_JS_TESTS := $(wildcard test/*.js)
 COMMON_JS_TESTS := $(INPUT_JS_TESTS:test/%.js=commonjs/%.js)
 
+BABELED_JS_TESTS := $(INPUT_JS_TESTS:test/%.test.js=floss/%.test.js)
+
 JS_ENTRY := src/index.js
 JS_ENTRY := $(JS_ENTRY:src/%.js=commonjs/%.js)
 
@@ -23,11 +25,20 @@ public/js/bundle.js: $(COMMON_JS)
 .SECONDARY: $(COMMON_JS) $(COMMON_JS_TESTS)
 .DELETE_ON_ERROR: public/js/bundle.js
 
-tests: commonjs/Size2D.test.js commonjs/Size2D.js
-	mkdir -p floss
-	node_modules/.bin/browserify -d $< > floss/Size2D.test.js
+tests: $(BABELED_JS_TESTS)
 
-commonjs/%.test.js: test/%.test.js src/%.js .babelrc
+# Every test depends on a commonjs file (compiled by babel)
+# with this naming convention:
+#
+# commonjs/Example.test.js && commonjs/Example.js
+#
+# We browserify the .test.js file, which is responsible for
+# importing symbols from the .js file
+floss/%.test.js: commonjs/%.test.js commonjs/%.js
+	mkdir -p $(@D)
+	node_modules/.bin/browserify -d $< > $@
+
+commonjs/%.test.js: test/%.test.js .babelrc
 	mkdir -p $(@D)
 	node_modules/.bin/babel $< -o $@ --source-maps inline
 
@@ -35,7 +46,7 @@ commonjs/%.js: src/%.js .babelrc
 	mkdir -p $(@D)
 	node_modules/.bin/babel $< -o $@ --source-maps inline
 
-# Copy pixi linto the public/js directory
+# Copy pixi into the public/js/ directory
 public/js/pixi.min.js: node_modules
 	cp $(PIXI_MIN_JS) public/js
 
@@ -49,8 +60,9 @@ node_modules: package.json
 clean:
 	rm -f public/js/bundle.js
 	rm -f $(COMMON_JS) $(COMMON_JS_TESTS)
+	rm -f $(BABELED_JS_TESTS)
 
 debug:
 	@echo $(JS_ENTRY)
 
-.PHONY: dev serve debug clean
+.PHONY: dev serve debug clean tests
