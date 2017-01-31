@@ -40,13 +40,18 @@ function updateRendererSize() {
 function setup() {
   // oryx: 16x24
   // mine: 28x35 (tile), 30x37 (cell)
-  for (let i = 0; i < t.length; i++) {
-    const s = new PIXI.Sprite(t.textures[i]);
+  const map = { chunkWidth: 4, chunkHeight: 5 };
+  const chunk = new Chunk(map, t);
+  const data = new Array(chunk.length).fill(14);
 
-    s.y = Math.floor(i / 9) * t.tileHeight;
-    s.x = (i % 9) * t.tileWidth;
-    window.stage.addChild(s);
-  }
+  window.chunk = chunk;
+
+  data[4] = 10;
+  data[8] = 19;
+
+  chunk.createSprites(data);
+
+  window.stage.addChild(chunk.container);
   window.renderer.render(window.stage);
 }
 

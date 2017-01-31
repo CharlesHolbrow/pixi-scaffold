@@ -96,7 +96,7 @@ export default class Tileset {
     // Get the baseTexture from either imgUrl or directly
     // supplied in options parameter.
     if (options.imgUrl)
-      this.baseTexture = PIXI.BaseTexture.fromImage(this.imgUrl);
+      this.baseTexture = PIXI.BaseTexture.fromImage(options.imgUrl);
     else
       this.baseTexture = options.baseTexture;
     // Ensure onLoad get called once and at the correct time.
