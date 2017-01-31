@@ -25,12 +25,38 @@ export default class Size2D extends EventEmitter {
     this._height = size.height;
   }
 
+  /**
+  * Get size width
+  * @returns {Number} width
+  */
   get width() {
     return this._width;
   }
 
+  /**
+  * Get size height
+  * @returns {Number} height
+  */
   get height() {
     return this._height;
+  }
+
+  /**
+  * Get size height
+  * @returns {Number} height
+  */
+  get center() {
+    return {
+      x: Math.floor(this.width * 0.5),
+      y: Math.floor(this.height * 0.5),
+    };
+  }
+
+  get centerFloat() {
+    return {
+      x: this.width,
+      y: this.height,
+    };
   }
 
   set width(width) {
