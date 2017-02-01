@@ -1,9 +1,13 @@
 // Ensure polyfills are loaded before any of our code
 import 'babel-polyfill';
 
+import bacon from 'baconjs';
+
 import Size2D from './Size2D.js';
 import Tileset from './Tileset.js';
 import Chunk from './Chunk.js';
+
+window.bacon = bacon;
 
 const Aether = {
   Size2D,

@@ -11,6 +11,7 @@
   "author": "Charles Holbrow",
   "license": "ISC",
   "dependencies": {
+    "baconjs": "^0.7.89",
     "eventemitter3": "^2.0.2",
     "pixi.js": "^4.3.4"
   },
