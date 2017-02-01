@@ -42,7 +42,7 @@ function setup() {
   // mine: 28x35 (tile), 30x37 (cell)
   const map = { chunkWidth: 4, chunkHeight: 5 };
   const chunk = new Chunk(map, t);
-  const data = new Array(chunk.length).fill(14);
+  const data = new Array(chunk.length).fill(9);
 
   window.chunk = chunk;
 
@@ -55,22 +55,22 @@ function setup() {
   window.renderer.render(window.stage);
 }
 
-window.onload = function() {
+window.onload = () => {
   // Create the renderer.
-  renderer = PIXI.autoDetectRenderer(512, 512);
-  renderer.roundPixels = true;
+  window.renderer = PIXI.autoDetectRenderer(512, 512);
+  window.renderer.roundPixels = true;
 
   // Add the canvas to the HTML document. This will cause the
   // size of the canvas to update as per the canvas css
   // settings. After the canvas has been given the correct size
   // we update the RendererSize
-  document.getElementById("main-view").appendChild(renderer.view);
-  stage = new PIXI.Container();
-  updateRendererSize()
+  document.getElementById('main-view').appendChild(window.renderer.view);
+  window.stage = new PIXI.Container();
+  updateRendererSize();
 
   PIXI.loader
-    .add("/img/elements9x3.png")
-    .load(setup)
+    .add('/img/elements9x3.png')
+    .load(setup);
 };
 
-window.addEventListener("resize", updateRendererSize);
+window.addEventListener('resize', updateRendererSize);
