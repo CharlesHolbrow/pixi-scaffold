@@ -52,13 +52,14 @@ export default class Chunk {
   }
 
   /**
-  * Create all the sprites for our chunk
+  * Create all the sprites for our chunk. Throw error if tileset not loaded
   *
-  * @arg {array} data - The contents of our chunk starting at the top left
+  * @arg {array} data - The contents of our chunk starting at the top left.
+  *                     Must have length equal to chunk length.
   */
   createSprites(data) {
     if (!this.tileset.hasLoaded)
-      throw new Error('Cannot render chunk: tileset not loaded');
+      throw new Error('Chunk cannot create sprites: tileset not loaded');
 
     if (data.length !== this.length)
       throw new Error('Data array wrong size for chunk');
@@ -80,5 +81,17 @@ export default class Chunk {
         cursorY += this.tileset.tileHeight;
       }
     }
+  }
+
+  /**
+  * Set a speciffic tile in the chunk.
+  *
+  * @arg {int} chunkIndex - Index of the tile to change starting from the top
+  *                         left of the chunk
+  * @arg {int} tileIndex - Tileset index to change to.
+  */
+  setTile(chunkIndex, tileIndex) {
+    this.container.children[chunkIndex].texture
+      = this.tileset.textures[tileIndex];
   }
 }
